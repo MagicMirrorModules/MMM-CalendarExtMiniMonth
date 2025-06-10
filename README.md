@@ -1,16 +1,14 @@
 # MMM-CalendarExtMinimonth
-Mini month plugin for MMM-CalendarExt/MMM-CalendarExt2
 
+Mini month plugin for [MMM-CalendarExt2](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2).
 
 ## Screenshot
-![screenshot](https://github.com/eouia/MMM-CalendarExtMinimonth/blob/master/sc1.png?raw=true)
 
+![screenshot](sc1.png)
 
 ## Installation
-This module is a plugin of MMM-CalendarExt/MMM-CalendarExt2 modules. So it couldn't work standalone. You need MMM-CalendarExt or MMM-CalendarExt2
-- [MMM-CalendarExt](https://github.com/eouia/MMM-CalendarExt)
-- [MMM-CalendarExt2](https://github.com/eouia/MMM-CalendarExt2)
 
+This module is a plugin for [MMM-CalendarExt2](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2). So it couldn't work standalone.
 
 ```sh
 cd ~/MagicMirror/modules
@@ -18,7 +16,9 @@ git clone https://github.com/eouia/MMM-CalendarExtMinimonth
 ```
 
 ## Configuration
+
 ### Simple
+
 ```js
 {
   module:"MMM-CalendarExtMinimonth",
@@ -27,7 +27,9 @@ git clone https://github.com/eouia/MMM-CalendarExtMinimonth
 ```
 
 ### Defaults & Details
+
 These values are defined as default. You don't need to copy entire things. Just select what you need.
+
 ```js
 defaults: {
   locale: null,
@@ -65,6 +67,6 @@ defaults: {
 },
 ```
 
-
 ## Styling
+
 See MMM-CalendarExtMinimonth.css
