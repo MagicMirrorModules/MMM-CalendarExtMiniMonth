@@ -1,6 +1,6 @@
-# MMM-CalendarExtMinimonth
+# MMM-CalendarExtMiniMonth
 
-Mini month plugin for [MMM-CalendarExt2](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2).
+Mini month plugin for [MMM-CalendarExt2](https://github.com/MagicMirrorModules/MMM-CalendarExt2).
 
 ## Screenshot
 
@@ -8,11 +8,11 @@ Mini month plugin for [MMM-CalendarExt2](https://github.com/MMM-CalendarExt2/MMM
 
 ## Installation
 
-This module is a plugin for [MMM-CalendarExt2](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2). So it couldn't work standalone.
+This module is a plugin for [MMM-CalendarExt2](https://github.com/MagicMirrorModules/MMM-CalendarExt2). So it couldn't work standalone.
 
 ```sh
 cd ~/MagicMirror/modules
-git clone https://github.com/eouia/MMM-CalendarExtMinimonth
+git clone https://github.com/MagicMirrorModules/MMM-CalendarExtMiniMonth
 ```
 
 ## Configuration
@@ -21,7 +21,7 @@ git clone https://github.com/eouia/MMM-CalendarExtMinimonth
 
 ```js
 {
-  module:"MMM-CalendarExtMinimonth",
+  module:"MMM-CalendarExtMiniMonth",
   position:"top_left",
 },
 ```
@@ -69,4 +69,4 @@ defaults: {
 
 ## Styling
 
-See MMM-CalendarExtMinimonth.css
+See MMM-CalendarExtMiniMonth.css
