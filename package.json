@@ -8,7 +8,8 @@
     "demo": "cd ../../ && MM_CONFIG_FILE=modules/MMM-CalendarExtMiniMonth/demo.config.js node --run start:dev",
     "lint": "eslint && prettier . --check",
     "lint:fix": "eslint --fix && prettier . --write",
-    "release": "commit-and-tag-version --config ./changelog.config.js"
+    "release": "commit-and-tag-version --config ./changelog.config.js",
+    "test": "node --run lint"
   },
   "repository": {
     "type": "git",
