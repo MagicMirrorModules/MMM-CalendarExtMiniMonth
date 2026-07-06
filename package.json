@@ -1,0 +1,20 @@
+{
+  "name": "mmm-calendarextminimonth",
+  "version": "1.0.1",
+  "type": "commonjs",
+  "description": "Mini month view module of MagicMirror².",
+  "main": "MMM-CalendarExtMiniMonth.js",
+  "scripts": {
+    "demo": "cd ../../ && MM_CONFIG_FILE=modules/MMM-CalendarExtMiniMonth/demo.config.js node --run start:dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MagicMirrorModules/MMM-CalendarExtMiniMonth.git"
+  },
+  "keywords": [
+    "magicmirror",
+    "calendar",
+    "minimonth"
+  ],
+  "license": "MIT"
+}

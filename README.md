@@ -1,23 +1,30 @@
 # MMM-CalendarExtMiniMonth
 
-Mini month plugin for [MMM-CalendarExt2](https://github.com/MagicMirrorModules/MMM-CalendarExt2).
+Mini month plugin for the default `calendar` module and [MMM-CalendarExt2](https://github.com/MagicMirrorModules/MMM-CalendarExt2).
 
 ## Screenshot
 
-![screenshot](sc1.png)
+![screenshot](screenshot.png)
 
 ## Installation
 
-This module is a plugin for [MMM-CalendarExt2](https://github.com/MagicMirrorModules/MMM-CalendarExt2). So it couldn't work standalone.
+This module works with the default `calendar` module or [MMM-CalendarExt2](https://github.com/MagicMirrorModules/MMM-CalendarExt2).
 
 ```sh
 cd ~/MagicMirror/modules
 git clone https://github.com/MagicMirrorModules/MMM-CalendarExtMiniMonth
 ```
 
+## Update
+
+```sh
+cd ~/MagicMirror/modules/MMM-CalendarExtMiniMonth
+git pull
+```
+
 ## Configuration
 
-### Simple
+Basic example:
 
 ```js
 {
@@ -58,13 +65,15 @@ defaults: {
 
   // I believe it's better to leave `weekdayFormat` and `dateFormat` as current values.
 
-  calendars: [], // names of calendar in your MMM-CalendarExt/MMM-CalendarExt2
+  calendars: [], // names of calendar in your default calendar/MMM-CalendarExt2
   // Use when you need only specific calendars.
 
-  source: "CALEXT2",
-  // or "CALEXT"
+  source: "CALENDAR",
+  // or "CALEXT2"
 },
 ```
+
+When using the default `calendar` module, make sure its config enables `broadcastEvents: true`.
 
 ## Styling
 
