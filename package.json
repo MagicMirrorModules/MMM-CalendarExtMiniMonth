@@ -7,7 +7,8 @@
   "scripts": {
     "demo": "cd ../../ && MM_CONFIG_FILE=modules/MMM-CalendarExtMiniMonth/demo.config.js node --run start:dev",
     "lint": "eslint && prettier . --check",
-    "lint:fix": "eslint --fix && prettier . --write"
+    "lint:fix": "eslint --fix && prettier . --write",
+    "release": "commit-and-tag-version --config ./changelog.config.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "@eslint/js": "^10.0.1",
     "@eslint/markdown": "^8.0.3",
     "@stylistic/eslint-plugin": "^5.10.0",
+    "commit-and-tag-version": "^12.7.3",
     "eslint": "^10.6.0",
     "globals": "^17.7.0",
     "prettier": "^3.9.4"
