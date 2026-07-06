@@ -4,6 +4,59 @@
 * By eouia
 */
 
+function getLocale(explicitLocale) {
+  return explicitLocale || config?.locale || config?.language || "en-US"
+}
+
+function getFirstDayOfWeek(locale) {
+  try {
+    return new Intl.Locale(locale).weekInfo?.firstDay % 7 || 0
+  } catch {
+    return 0
+  }
+}
+
+function getCalendarRange(baseDate, locale) {
+  var firstDayOfWeek = getFirstDayOfWeek(locale)
+  var monthStart = new Date(baseDate.getFullYear(), baseDate.getMonth(), 1)
+  var monthEnd = new Date(baseDate.getFullYear(), baseDate.getMonth() + 1, 0, 23, 59, 59, 999)
+  var daysFromWeekStart = (monthStart.getDay() - firstDayOfWeek + 7) % 7
+  var daysToWeekEnd = (firstDayOfWeek + 6 - monthEnd.getDay() + 7) % 7
+  return {
+    viewStart: new Date(monthStart.getFullYear(), monthStart.getMonth(), monthStart.getDate() - daysFromWeekStart, 0, 0, 0, 0),
+    viewEnd: new Date(monthEnd.getFullYear(), monthEnd.getMonth(), monthEnd.getDate() + daysToWeekEnd, 23, 59, 59, 999),
+  }
+}
+
+function getOrdinal(day) {
+  if (day < 11 || day > 13) {
+    return day + ({ 1: "st", 2: "nd", 3: "rd" }[day % 10] || "th")
+  }
+  return day + "th"
+}
+
+function formatPattern(date, pattern, locale) {
+  switch (pattern) {
+    case "MMMM":
+      return new Intl.DateTimeFormat(locale, { month: "long" }).format(date)
+    case "MMM":
+      return new Intl.DateTimeFormat(locale, { month: "short" }).format(date)
+    case "dddd":
+      return new Intl.DateTimeFormat(locale, { weekday: "long" }).format(date)
+    case "ddd":
+      return new Intl.DateTimeFormat(locale, { weekday: "short" }).format(date)
+    case "dd":
+      return new Intl.DateTimeFormat(locale, { weekday: "narrow" }).format(date)
+    case "Do":
+      return getOrdinal(date.getDate())
+    case "DD":
+      return String(date.getDate()).padStart(2, "0")
+    case "D":
+    default:
+      return String(date.getDate())
+  }
+}
+
 Module.register("MMM-CalendarExtMinimonth",{
   defaults: {
     locale: null, // if null, locale of system default will be used.
@@ -31,17 +84,14 @@ Module.register("MMM-CalendarExtMinimonth",{
     return ["MMM-CalendarExtMinimonth.css"]
   },
 
-  getScripts: function () {
-  return ["moment.js"];
-  },
-
   getDom: function() {
     var dom = document.createElement("div")
     dom.id = "CXMM"
     if (this.slots.length == 0) return dom
     var header = document.createElement("div")
     header.className = "header"
-    header.innerHTML = (this.config.titleFormat) ? moment().format(this.config.titleFormat) : null
+    var locale = getLocale(this.config.locale)
+    header.innerHTML = (this.config.titleFormat) ? formatPattern(new Date(), this.config.titleFormat, locale) : null
     dom.appendChild(header)
     dom.appendChild(this.drawSlot())
     return dom
@@ -116,14 +166,9 @@ Module.register("MMM-CalendarExtMinimonth",{
     console.log(this.slots)
     if (this.slots.length == 0) return dom
 
-    var locale = (this.config.locale) ? this.config.locale : moment.locale()
-    var startCalDate = moment().locale(locale).startOf('month').startOf('week')
-    var endCalDate = moment().locale(locale).endOf('month').endOf('week')
-
-    var startThisMonth = moment().locale(locale).startOf('month').format("X")
-    var endThisMonth = moment().locale(locale).endOf('month').format("X")
-    var startToday = moment().locale(locale).startOf('day').format("X")
-    var endToday = moment().locale(locale).endOf('day').format("X")
+    var locale = getLocale(this.config.locale)
+    var now = new Date()
+    var range = getCalendarRange(now, locale)
 
     var week = null
     week = document.createElement("div")
@@ -131,9 +176,9 @@ Module.register("MMM-CalendarExtMinimonth",{
       var cell = document.createElement("div")
       cell.classList.add("cell")
       cell.classList.add("weekday_title")
-      var d = moment().locale(locale).startOf("week").add(i, "d")
-      cell.classList.add("weekdays_" + d.isoWeekday())
-      cell.innerHTML = d.format(this.config.weekdayFormat)
+      var d = new Date(range.viewStart.getFullYear(), range.viewStart.getMonth(), range.viewStart.getDate() + i)
+      cell.classList.add("weekdays_" + (d.getDay() === 0 ? 7 : d.getDay()))
+      cell.innerHTML = formatPattern(d, this.config.weekdayFormat, locale)
       week.appendChild(cell)
     }
     dom.appendChild(week)
@@ -143,14 +188,13 @@ Module.register("MMM-CalendarExtMinimonth",{
         week = document.createElement("div")
       }
       var slot = this.slots[i]
-      var date = moment.unix(slot.key).locale(locale)
-      var dateX = date.format("X")
-      var isThisMonth = (dateX >= startThisMonth && dateX < endThisMonth)
-      var isToday = (dateX >= startToday && dateX < endToday)
+      var date = new Date(Number(slot.key) * 1000)
+      var isThisMonth = date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth()
+      var isToday = date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() && date.getDate() === now.getDate()
       var cell = document.createElement("div")
-      cell.innerHTML = date.format("D")
+      cell.innerHTML = formatPattern(date, this.config.dateFormat, locale)
       cell.classList.add("cell")
-      cell.classList.add("weekdays_" + date.isoWeekday())
+      cell.classList.add("weekdays_" + (date.getDay() === 0 ? 7 : date.getDay()))
       if (isToday) cell.classList.add("today")
       if (isThisMonth) cell.classList.add("thismonth")
       if (slot.events.length > 0) {
@@ -178,30 +222,30 @@ Module.register("MMM-CalendarExtMinimonth",{
 
   makeSlot: function(events) {
     var slots = []
-    var locale = (this.config.locale) ? this.config.locale : moment.locale()
-    var startCalDate = moment().locale(locale).startOf('month').startOf('week')
-    var endCalDate = moment().locale(locale).endOf('month').endOf('week')
-    var index = moment(startCalDate).startOf("day")
-    while (index.isBefore(moment(endCalDate))) {
-      var key = index.format("X")
+    var locale = getLocale(this.config.locale)
+    var now = new Date()
+    var range = getCalendarRange(now, locale)
+    var index = new Date(range.viewStart)
+    while (index.getTime() < range.viewEnd.getTime()) {
+      var key = String(Math.floor(index.getTime() / 1000))
       var slot = {
         "key": key,
         "events": []
       }
-      var dayStart = moment(index).locale(locale).startOf("day")
-      var dayEnd = moment(index).locale(locale).endOf("day")
+      var dayStart = new Date(index.getFullYear(), index.getMonth(), index.getDate(), 0, 0, 0, 0)
+      var dayEnd = new Date(index.getFullYear(), index.getMonth(), index.getDate(), 23, 59, 59, 999)
       for(var i = 0; i < events.length; i++) {
         var ev = events[i]
-        var evS = moment(Number(ev.startDate))
-        var evE = moment(Number(ev.endDate))
-        if (evE.isSameOrBefore(dayStart) || evS.isAfter(dayEnd)) {
+        var evS = new Date(Number(ev.startDate))
+        var evE = new Date(Number(ev.endDate))
+        if (evE.getTime() <= dayStart.getTime() || evS.getTime() > dayEnd.getTime()) {
           // not matched
         } else {
           slot.events.push(ev)
         }
       }
       slots.push(slot)
-      index.add(1, "d")
+      index = new Date(index.getFullYear(), index.getMonth(), index.getDate() + 1)
     }
     this.maxEventCounts = Math.max.apply(
       Math, slots.map(function(o){return o.events.length})
@@ -210,24 +254,30 @@ Module.register("MMM-CalendarExtMinimonth",{
   },
 
   updateRequest: function() {
+    var now = new Date()
+    var locale = getLocale(this.config.locale)
+    var range = getCalendarRange(now, locale)
     var filter = {
       names: this.names,
-      from: moment().startOf('month').startOf('week').format('x'),
-      to: moment().endOf('month').endOf('week').format('x'),
+      from: String(range.viewStart.getTime()),
+      to: String(range.viewEnd.getTime()),
       count: this.config.maxItems
     }
     var payload = {
       filter: filter,
-      sessionId: moment().format('x')
+      sessionId: String(Date.now())
     }
     this.sendNotification("CALEXT_TELL_SCHEDULE", payload)
   },
 
   updateRequest2: function() {
+    var now = new Date()
+    var locale = getLocale(this.config.locale)
+    var range = getCalendarRange(now, locale)
+    var from = Math.floor(range.viewStart.getTime() / 1000)
+    var to = Math.floor(range.viewEnd.getTime() / 1000)
     var payload = {
       filter: (e) => {
-        var from = moment().startOf("month").startOf('week').format("X")
-        var to = moment().endOf("month").endOf('week').format("X")
         if (this.names.length > 0) {
           if (this.names.indexOf(e.calendarName) < 0) {
             return false

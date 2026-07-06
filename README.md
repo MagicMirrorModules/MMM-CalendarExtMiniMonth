@@ -48,8 +48,7 @@ defaults: {
   // milliseconds. Do you really need
 
   titleFormat: "MMMM",
-  // the formatter rule of `moment.js`
-  // https://momentjs.com/docs/#/displaying/format/
+  // supported values: "MMMM", "MMM", "D", "DD", "Do", "dd", "ddd", "dddd"
 
   weekdayFormat: "dd",
   //"dd", "ddd", "dddd",
