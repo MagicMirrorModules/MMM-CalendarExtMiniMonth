@@ -28,7 +28,7 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "commit-and-tag-version": "^13.1.2",
     "eslint": "^10.7.0",
-    "globals": "^17.7.0",
+    "globals": "^17.9.0",
     "prettier": "^3.9.6"
   }
 }
