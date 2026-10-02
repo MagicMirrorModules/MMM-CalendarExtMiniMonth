@@ -52,6 +52,12 @@ function formatPattern(date, pattern, locale) {
   }
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, function (ch) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;' }[ch]
+  })
+}
+
 function toTimestampMs(value) {
   if (value instanceof Date) {
     return value.getTime()
@@ -179,7 +185,7 @@ Module.register('MMM-CalendarExtMiniMonth', {
         }
         return {
           name: calendarName,
-          title: event.title,
+          title: event.title ? escapeHtml(event.title) : event.title,
           startDate: startDate,
           endDate: endDate,
           fullDayEvent: !!event.fullDayEvent,
