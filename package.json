@@ -1,6 +1,6 @@
 {
   "name": "mmm-calendarextminimonth",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "commonjs",
   "description": "Mini month view module of MagicMirror².",
   "main": "MMM-CalendarExtMiniMonth.js",
