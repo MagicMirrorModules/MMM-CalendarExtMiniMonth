@@ -1,55 +1,55 @@
 #CXMM {
   --base-size: 16px; /* You can adjust this value to fit your size */
-}
 
-#CXMM div {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  line-height: 100%;
-}
+  div {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 100%;
+  }
 
-#CXMM .cell {
-  width: calc(var(--base-size) * 3);
-  height: calc(var(--base-size) * 3);
-  display: inline-block;
-  font-size: var(--base-size);
-  font-weight: normal;
-  border-radius: 50%;
-  line-height: calc(
-    var(--base-size) * 3 - 4px
-  ); /* This value might be needed to change when you change --base-size */
-  text-align: center;
-  margin: calc(var(--base-size) / 4);
-  color: #999;
-}
+  .cell {
+    width: calc(var(--base-size) * 3);
+    height: calc(var(--base-size) * 3);
+    display: inline-block;
+    font-size: var(--base-size);
+    font-weight: normal;
+    border-radius: 50%;
+    line-height: calc(
+      var(--base-size) * 3 - 4px
+    ); /* This value might be needed to change when you change --base-size */
+    text-align: center;
+    margin: calc(var(--base-size) / 4);
+    color: #999;
+  }
 
-#CXMM .cell.thismonth {
-  color: #fff;
-  background-color: #222;
-}
+  .cell.thismonth {
+    color: #fff;
+    background-color: #222;
+  }
 
-#CXMM .cell.today {
-  background-color: #fff;
-  color: #000;
-  font-weight: bold;
-}
+  .cell.today {
+    background-color: #fff;
+    color: #000;
+    font-weight: bold;
+  }
 
-#CXMM .cell.event_exist {
-  border: 2px solid #ccc;
-}
+  .cell.event_exist {
+    border: 2px solid #ccc;
+  }
 
-#CXMM .cell.weekday_title {
-  color: #fff;
-  background-color: #333;
-}
+  .cell.weekday_title {
+    color: #fff;
+    background-color: #333;
+  }
 
-#CXMM .cell.weekdays_6 {
-  /* Saturday */
-  color: Turquoise;
-}
+  .cell.weekdays_6 {
+    /* Saturday */
+    color: Turquoise;
+  }
 
-#CXMM .cell.weekdays_7 {
-  /* Sunday */
-  color: Crimson;
+  .cell.weekdays_7 {
+    /* Sunday */
+    color: Crimson;
+  }
 }
