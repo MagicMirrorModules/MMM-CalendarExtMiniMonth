@@ -33,40 +33,34 @@ Basic example:
 },
 ```
 
-### Defaults & Details
+### Configuration options
 
-These values are defined as default. You don't need to copy entire things. Just select what you need.
+All options are optional. Add overrides to the module's `config` object in your MagicMirror configuration.
+
+| Option              | Default            | Description                                                                                                |
+| ------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| `locale`            | `null`             | Uses the MagicMirror locale.                                                                               |
+| `dynamicEventColor` | `["#333", "#F3F"]` | CSS colors for the event-count gradient. Set to `null` to disable the fill and show only the event border. |
+| `refreshInterval`   | `600000`           | Refresh interval in milliseconds.                                                                          |
+| `titleFormat`       | `"MMMM"`           | Format pattern for the month header, such as `"MMMM"` or `"MMM"`.                                          |
+| `weekdayFormat`     | `"dd"`             | Weekday label format: `"dd"`, `"ddd"`, or `"dddd"`.                                                        |
+| `dateFormat`        | `"D"`              | Day number format: `"D"`, `"Do"`, or `"DD"`.                                                               |
+| `calendars`         | `[]`               | Calendar names to include. An empty array includes all calendars.                                          |
+| `source`            | `"CALENDAR"`       | Event source: `"CALENDAR"` or `"CALEXT2"`.                                                                 |
+
+### Configuration example
+
+Add an entry like this to the `modules` array in your `config.js`:
 
 ```js
-defaults: {
-  locale: null,
-  // if null, locale of system default will be used.
-  // e.g) "en-US", "de-DE", "ko-KR", ...
-
-  dynamicEventColor: ["#333", "#F3F"],
-  // if null, only circle border will be shown when event exists.
-  // You can use color name or rgb(), rgba() CSS functions.
-  // e.g) ["LightRed", "DarkBlue"]
-
-  refreshInterval: 60*10*1000,
-  // milliseconds. Do you really need
-
-  titleFormat: "MMMM",
-  // supported values: "MMMM", "MMM", "D", "DD", "Do", "dd", "ddd", "dddd"
-
-  weekdayFormat: "dd",
-  //"dd", "ddd", "dddd",
-
-  dateFormat: "D",
-  //D, Do, DD.
-
-  // I believe it's better to leave `weekdayFormat` and `dateFormat` as current values.
-
-  calendars: [], // names of calendar in your default calendar/MMM-CalendarExt2
-  // Use when you need only specific calendars.
-
-  source: "CALENDAR",
-  // or "CALEXT2"
+{
+  module: "MMM-CalendarExtMiniMonth",
+  position: "top_left",
+  config: {
+    calendars: ["Family Calendar"],
+    dynamicEventColor: ["#000099", "#000099"],
+    source: "CALEXT2"
+  }
 },
 ```
 
