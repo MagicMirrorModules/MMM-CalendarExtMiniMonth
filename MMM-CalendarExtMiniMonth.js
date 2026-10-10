@@ -179,7 +179,6 @@ Module.register('MMM-CalendarExtMiniMonth', {
         }
         return {
           name: calendarName,
-          title: event.title,
           startDate: startDate,
           endDate: endDate,
           fullDayEvent: !!event.fullDayEvent,
@@ -189,7 +188,7 @@ Module.register('MMM-CalendarExtMiniMonth', {
         }
       })
       .filter(function (event) {
-        if (!(event.name && event.title && Number.isFinite(event.startDate) && Number.isFinite(event.endDate))) {
+        if (!(event.name && Number.isFinite(event.startDate) && Number.isFinite(event.endDate))) {
           return false
         }
         if (configuredNames.length > 0 && configuredNames.indexOf(event.name) < 0) {
