@@ -48,9 +48,6 @@ defaults: {
   // You can use color name or rgb(), rgba() CSS functions.
   // e.g) ["LightRed", "DarkBlue"]
 
-  maxItems: 100,
-  // if you need, give enough counts. This value would be related with performance.
-
   refreshInterval: 60*10*1000,
   // milliseconds. Do you really need
 

@@ -75,7 +75,6 @@ Module.register('MMM-CalendarExtMiniMonth', {
     locale: null, // if null, locale of system default will be used.
     dynamicEventColor: ['#333', '#F3F'], // if null, only circle border will be shown when event exists.
     // You can use color name or rgb() CSS function.
-    maxItems: 100,
     refreshInterval: 60 * 10 * 1000, // millisec.
     // titleFormat: "",
     titleFormat: 'MMMM',
